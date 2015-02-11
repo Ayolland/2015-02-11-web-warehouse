@@ -1,0 +1,10 @@
+<h2> VIEWING ALL LOCATIONS </h2>
+  
+<pre>
+  <% index = "id".ljust(5)+"name".ljust(15)+"capacity" %><%= index %>
+  
+  <% @objects.each do |object|
+   entry = (puts object.id.to_s.ljust(5) + object.name.ljust(15) + object.capacity.to_s) %> <%= entry %>
+  <% end %>
+  
+</pre>

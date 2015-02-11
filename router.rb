@@ -9,10 +9,36 @@ require_relative "location.rb"
 require_relative "boot.rb"
 
 WAREHOUSE = SQLite3::Database.new('warehouse.db')
-boot_db
+
+  WAREHOUSE.results_as_hash = true
+  WAREHOUSE.execute("CREATE TABLE IF NOT EXISTS products
+                   (id INTEGER PRIMARY KEY,
+                    category_id INTEGER,
+                    location_id INTEGER)")
+  WAREHOUSE.execute("CREATE TABLE IF NOT EXISTS categories
+                   (id INTEGER PRIMARY KEY,
+                    name TEXT,
+                    description TEXT,
+                    cost INTEGER)")
+  WAREHOUSE.execute("CREATE TABLE IF NOT EXISTS locations
+                   (id INTEGER PRIMARY KEY,
+                    name TEXT,
+                    capacity INTEGER)")
 
 get "/products" do
   @objects = Product.seek_all
   binding.pry
   erb :products
+end
+
+get "/categories" do
+  @objects = Category.seek_all
+  binding.pry
+  erb :categories
+end
+
+get "/locations" do
+  @objects = Location.seek_all
+  binding.pry
+  erb :locations
 end
