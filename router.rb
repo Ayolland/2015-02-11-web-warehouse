@@ -42,3 +42,8 @@ get "/locations" do
   binding.pry
   erb :locations
 end
+
+post "/new" do
+  @type = @objects[0].class
+  erb :new
+end

@@ -2,11 +2,22 @@
   
 <pre>
   <% index = "id".ljust(5)+"category".ljust(15)+"location" %><%= index %>
-  
+  <h_rule>
   <% @objects.each do |object|
    category_name = WAREHOUSE.execute("SELECT name FROM categories WHERE id = #{object.category_id}")[0]["name"]
    location_name = WAREHOUSE.execute("SELECT name FROM locations WHERE id = #{object.location_id}")[0]["name"]
    entry = (object.id.to_s.ljust(5) + category_name.ljust(15) + location_name) %> <%= entry %>
-  <% end %>
-  
+  <% end %>  
 </pre>
+
+<form action="/new" method="post">
+  <input type=submit name=add value="Add Entry">
+</form><br>
+<form action="/edit" method="post">
+  <input type=number name=edit_id><input type=submit name=edit value="Edit Entry">
+</form><br>
+<form action="/del" method="post">
+  <input type=number name=del_id><input type=submit name=edit value="Delete Entry">
+</form><br>
+  <a href=>Search in Products</a>
+</form>

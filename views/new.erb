@@ -1,0 +1,17 @@
+<h2>INPUT NEW <%= @type.upcase %>:</h2>
+<form>
+<%  @objects[0].instance_variables.each do |entry|
+      attribute = entry.to_s.delete("@")
+      attribute.is_a(String)? attr_type = "text" : attr_type = "number"
+      if attribute != "id" %>
+        <%= attribute.capitalize %>:<input type=<%= attr_type %> name=<%= attribute %>>  
+      <%end
+    end %>
+  </form>
+    
+    
+    
+    
+    
+    
+    
