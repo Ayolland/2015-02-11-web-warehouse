@@ -66,7 +66,7 @@ module Insert_Save
     table_name = class_to_table
     sql_id = @id.delete("X")
     sql_string = "DELETE FROM #{table_name} WHERE id = #{sql_id}"
-    
+    binding.pry
     WAREHOUSE.execute(sql_string)
   end
   

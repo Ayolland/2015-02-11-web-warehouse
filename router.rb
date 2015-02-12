@@ -48,6 +48,21 @@ post "/del" do
   erb :del
 end
 
+get "/del" do
+  object_name = params[:type].capitalize
+  a = Object.const_get(object_name).send("new",params)
+  a.id = "XX" + a.id.to_s + "XX"
+  binding.pry
+  a.cram
+  if params[:type] == "Product"
+    erb :products
+  elsif params[:type] == "Category"
+    erb :categories
+  else params[:type] == "Location"
+    erb :locations
+  end
+end
+
 post "/new/:type" do
   object_name = params[:type].capitalize
   a = Object.const_get(object_name).send("new",params)

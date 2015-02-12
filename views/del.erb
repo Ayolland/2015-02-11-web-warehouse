@@ -1,9 +1,22 @@
-<%   @objects = Object.const_get(@type).send("seek","id",@id)  %>
+<%   @objects = Object.const_get(@type).send("seek","id",@id)  
+object =@objects[0]%>
 <h2>ARE YOU SURE YOU WANT TO DELETE THIS <%= @type.upcase %>?</h2>
 <pre>
-  <% @objects.each do |object|
-   category_name = WAREHOUSE.execute("SELECT name FROM categories WHERE id = #{object.category_id}")[0]["name"]
+  <% index = "id".ljust(5)+"category".ljust(15)+"location" if @type == "Product"
+     index = "id".ljust(5)+"name".ljust(15)+"cost".ljust(6)+"description" if @type == "Category"
+     index = "id".ljust(5)+"name".ljust(15)+"capacity" if @type == "Location"%><%= index %>
+  <% category_name = WAREHOUSE.execute("SELECT name FROM categories WHERE id = #{object.category_id}")[0]["name"]
    location_name = WAREHOUSE.execute("SELECT name FROM locations WHERE id = #{object.location_id}")[0]["name"]
-   entry = (object.id.to_s.ljust(5) + category_name.ljust(15) + location_name) %> <%= entry %>
-  <% end %>
+   entry = (object.id.to_s.ljust(5) + category_name.ljust(15) + location_name) if @type == "Product"
+   entry = (object.id.to_s.ljust(5) + object.name.ljust(15) + object.cost.to_s.ljust(6) + object.description) if @type == "Category"
+   entry = (puts object.id.to_s.ljust(5) + object.name.ljust(15) + object.capacity.to_s) if @type == "Location"%><%= entry %>
 </pre>
+<% send = {"Product"=>"products","Category"=>"categories","Location"=>"locations"}[@type]%>
+<form >
+  <input type=submit name=ignore value="Delete"> this
+  <input type=text name=type value=<%= @objects[0].class %> readonly>:
+  <input type=text name=id value=<%= @objects[0].id %> readonly>
+</form>
+<form action="/<%= send %>" method="get">
+  <input type=submit name=ignore value="Cancel">
+</form>
