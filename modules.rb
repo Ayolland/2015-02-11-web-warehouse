@@ -47,6 +47,7 @@ module Insert_Save
   
   
   def cram
+    binding.pry
     table_name = class_to_table
     if @id != nil and @id.is_a?(Integer)
       self.save(table_name)

@@ -1,11 +1,24 @@
-<%   @objects = Location.seek_all  %>
+<%  @objects = Location.seek_all %>
 <h2> VIEWING ALL LOCATIONS </h2>
   
 <pre>
   <% index = "id".ljust(5)+"name".ljust(15)+"capacity" %><%= index %>
   
   <% @objects.each do |object|
-   entry = (puts object.id.to_s.ljust(5) + object.name.ljust(15) + object.capacity.to_s) %> <%= entry %>
+   entry = ( object.id.to_s.ljust(5) + object.name.ljust(15) + object.capacity.to_s) %> <%= entry %>
   <% end %>
   
 </pre>
+
+<form action="/add" method="post">
+  <input type=submit name=add value="Add New">
+  <input type=text name=type value=<%= @objects[0].class %> readonly>
+</form><br>
+<form action="/edit" method="post">
+  Enter ID to<input type=number name=edit_id><input type=submit name=edit value="Edit">
+  <input type=text name=type value=<%= @objects[0].class %> readonly>
+</form><br>
+<form action="/del" method="post">
+  Enter ID to<input type=number name=del_id><input type=submit name=edit value="Delete">
+  <input type=text name=type value=<%= @objects[0].class %> readonly>
+</form><br>

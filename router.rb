@@ -63,9 +63,17 @@ get "/del" do
   end
 end
 
+post "/edit" do
+  @type = params[:type]
+  @id   = params[:edit_id]
+  erb :edit
+end
+
 post "/new/:type" do
   object_name = params[:type].capitalize
   a = Object.const_get(object_name).send("new",params)
+  a.id = params[:id].to_i if a.id.to_i != 0
+  binding.pry
   a.cram
   if params[:type] == "Product"
     erb :products

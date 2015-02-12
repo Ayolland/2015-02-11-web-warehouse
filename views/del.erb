@@ -5,8 +5,8 @@ object =@objects[0]%>
   <% index = "id".ljust(5)+"category".ljust(15)+"location" if @type == "Product"
      index = "id".ljust(5)+"name".ljust(15)+"cost".ljust(6)+"description" if @type == "Category"
      index = "id".ljust(5)+"name".ljust(15)+"capacity" if @type == "Location"%><%= index %>
-  <% category_name = WAREHOUSE.execute("SELECT name FROM categories WHERE id = #{object.category_id}")[0]["name"]
-   location_name = WAREHOUSE.execute("SELECT name FROM locations WHERE id = #{object.location_id}")[0]["name"]
+  <% category_name = WAREHOUSE.execute("SELECT name FROM categories WHERE id = #{object.category_id}")[0]["name"] if @type == "Product"
+   location_name = WAREHOUSE.execute("SELECT name FROM locations WHERE id = #{object.location_id}")[0]["name"] if @type == "Product"
    entry = (object.id.to_s.ljust(5) + category_name.ljust(15) + location_name) if @type == "Product"
    entry = (object.id.to_s.ljust(5) + object.name.ljust(15) + object.cost.to_s.ljust(6) + object.description) if @type == "Category"
    entry = (puts object.id.to_s.ljust(5) + object.name.ljust(15) + object.capacity.to_s) if @type == "Location"%><%= entry %>
