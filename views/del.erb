@@ -11,12 +11,12 @@ object =@objects[0]%>
    entry = (object.id.to_s.ljust(5) + object.name.ljust(15) + object.cost.to_s.ljust(6) + object.description) if @type == "Category"
    entry = (puts object.id.to_s.ljust(5) + object.name.ljust(15) + object.capacity.to_s) if @type == "Location"%><%= entry %>
 </pre>
-<% send = {"Product"=>"products","Category"=>"categories","Location"=>"locations"}[@type]%>
-<form >
-  <input type=submit name=ignore value="Delete"> this
-  <input type=text name=type value=<%= @objects[0].class %> readonly>:
-  <input type=text name=id value=<%= @objects[0].id %> readonly>
+<% route = plural(@type)%>
+<form action="/mark" method="get">
+  <input type=submit name=ignore value="Delete this <%= @objects[0].class %>"> this
+  <input type=hidden name=type value=<%= @objects[0].class %> readonly>:
+  <input type=hidden name=id value=<%= @objects[0].id %> readonly>
 </form>
-<form action="/<%= send %>" method="get">
+<form action="/<%= route %>" method="get">
   <input type=submit name=ignore value="Cancel">
 </form>

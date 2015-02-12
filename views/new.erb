@@ -1,14 +1,10 @@
-<% variables = {"Product"=>["category_id","location_id"], "Category"=>["name","cost","description"], "Location"=>["name","capacity"]}[@type]%>
 <h2>INPUT NEW <%= @type.upcase %>:</h2>
-<form action="/new/<%= @type %>" method="post">
-<%  variables.each do |attribute|
-attr_type = {"category_id"=>:int,"location_id"=>:int,"name"=>:str,"description"=>:str,"cost"=>:int,"capacity"=>:int}[attribute]
-attr_type = "text" if attr_type == :str
-attr_type = "number" if attr_type == :int%>
-        <%= attribute.capitalize %>:<input type=<%= attr_type %> name=<%= attribute %>><br> 
+<form action="/new/<%= @type %>" method="get">
+<%  @variables.each do |attribute| %>
+        <%= attribute.capitalize %>:<input type=<%= str_v_int(attribute) %> name=<%= attribute %>><br> 
 <% end %>
-  <input type=submit name=ignore value="Create New">
-  <input type=text name=type value=<%= @type.capitalize %> readonly>
+  <input type=submit name=ignore value="Create New <%= @type %>">
+  <input type=hidden name=type value=<%= @type %> readonly>
 </form>
 <% if @type == "Product"
 erb "bits/foereign_keys".to_sym

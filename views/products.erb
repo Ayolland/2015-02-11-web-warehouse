@@ -5,8 +5,7 @@
   <% index = "id".ljust(5)+"category".ljust(15)+"location" %><%= index %>
   
   <% @objects.each do |object|
-   category_name = WAREHOUSE.execute("SELECT name FROM categories WHERE id = #{object.category_id}")[0]["name"]
-   location_name = WAREHOUSE.execute("SELECT name FROM locations WHERE id = #{object.location_id}")[0]["name"]
+  location_name, category_name = loc_cat_id(object)
    entry = (object.id.to_s.ljust(5) + category_name.ljust(15) + location_name) %> <%= entry %>
   <% end %>  
 </pre>

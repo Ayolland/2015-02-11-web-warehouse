@@ -16,6 +16,7 @@ end
 
 get "/products" do
   @objects = Product.seek_all
+  binding.pry
   erb :products
 end
 
@@ -29,18 +30,19 @@ get "/locations" do
   erb :locations
 end
 
-post "/add" do 
+get "/add" do 
   @type = params[:type]
+  @variables = editable(@type)
   erb :new
 end
 
-post "/del" do
+get "/del" do
   @type = params[:type]
   @id   = params[:del_id]
   erb :del
 end
 
-get "/del" do
+get "/mark" do
   object_name = params[:type].capitalize
   a = Object.const_get(object_name).send("new",params)
   a.id = "XX" + a.id.to_s + "XX"
@@ -48,25 +50,33 @@ get "/del" do
   swoosh
 end
 
-post "/edit" do
+get "/edit" do
   @type = params[:type]
   @id   = params[:edit_id]
+  @variables = editable(@type)
+  @objects = Object.const_get(@type).send("seek","id",@id)  
+  @object = @objects[0]
   erb :edit
 end
 
-post "/new/:type" do
+get "/new/:type" do
   object_name = params[:type].capitalize
   a = Object.const_get(object_name).send("new",params)
   a.id = params[:id].to_i if a.id.to_i != 0
-  binding.pry
   a.cram
   swoosh
 end
 
+get "/search" do
+  
+end
+
 helpers do
+  
   def swoosh
     if params[:type] == "Product"
       @objects = Product.seek_all
+      binding.pry
       erb :products
     elsif params[:type] == "Category"
       @objects = Category.seek_all
@@ -75,6 +85,28 @@ helpers do
       @objects = Location.seek_all
       erb :locations
     end
+  end
+  
+  def loc_cat_id(object)
+    #binding.pry
+    category_name = WAREHOUSE.execute("SELECT name FROM categories WHERE id = #{object.category_id}")[0]["name"]
+    location_name = WAREHOUSE.execute("SELECT name FROM locations WHERE id = #{object.location_id}")[0]["name"]
+    return location_name, category_name
+  end
+  
+  def plural(type)
+    {"Product"=>"products","Category"=>"categories","Location"=>"locations"}[type]
+  end
+  
+  def editable(type)
+    {"Product"=>["category_id","location_id"], "Category"=>["name","cost","description"], "Location"=>["name","capacity"]}[type]
+  end
+  
+  def str_v_int(attribute)
+    attr_type = {"category_id"=>:int,"location_id"=>:int,"name"=>:str,"description"=>:str,"cost"=>:int,"capacity"=>:int}[attribute]
+    attr_type = "text" if attr_type == :str
+    attr_type = "number" if attr_type == :int
+    attr_type
   end
   
 end
