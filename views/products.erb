@@ -1,3 +1,4 @@
+<%   @objects = Product.seek_all  %>
 <h2> VIEWING ALL PRODUCTS </h2>
   
 <pre>
@@ -10,14 +11,18 @@
   <% end %>  
 </pre>
 
-<form action="/new" method="post">
-  <input type=submit name=add value="Add Entry">
+<form action="/add" method="post">
+  <input type=submit name=add value="Add New">
+  <input type=text name=type value=<%= @objects[0].class %> readonly>
 </form><br>
 <form action="/edit" method="post">
-  <input type=number name=edit_id><input type=submit name=edit value="Edit Entry">
+  Enter ID to<input type=number name=edit_id><input type=submit name=edit value="Edit">
+  <input type=text name=type value=<%= @objects[0].class %> readonly>
 </form><br>
 <form action="/del" method="post">
-  <input type=number name=del_id><input type=submit name=edit value="Delete Entry">
+  Enter ID to<input type=number name=del_id><input type=submit name=edit value="Delete">
+  <input type=text name=type value=<%= @objects[0].class %> readonly>
 </form><br>
   <a href=>Search in Products</a>
 </form>
+<% params[:type] = "Product" %>

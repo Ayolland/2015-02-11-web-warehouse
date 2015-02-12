@@ -26,24 +26,37 @@ WAREHOUSE = SQLite3::Database.new('warehouse.db')
                     capacity INTEGER)")
 
 get "/products" do
-  @objects = Product.seek_all
-  binding.pry
   erb :products
 end
 
 get "/categories" do
-  @objects = Category.seek_all
-  binding.pry
   erb :categories
 end
 
 get "/locations" do
-  @objects = Location.seek_all
-  binding.pry
   erb :locations
 end
 
-post "/new" do
-  @type = @objects[0].class
+post "/add" do 
+  @type = params[:type]
   erb :new
+end
+
+post "/del" do
+  @type = params[:type]
+  @id   = params[:del_id]
+  erb :del
+end
+
+post "/new/:type" do
+  object_name = params[:type].capitalize
+  a = Object.const_get(object_name).send("new",params)
+  a.cram
+  if params[:type] == "Product"
+    erb :products
+  elsif params[:type] == "Category"
+    erb :categories
+  else params[:type] == "Location"
+    erb :locations
+  end
 end

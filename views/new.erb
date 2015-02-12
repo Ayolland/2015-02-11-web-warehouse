@@ -1,13 +1,15 @@
+<% variables = {"Product"=>["category_id","location_id"], "Category"=>["name","cost","description"], "Location"=>["name","capacity"]}[@type]%>
 <h2>INPUT NEW <%= @type.upcase %>:</h2>
-<form>
-<%  @objects[0].instance_variables.each do |entry|
-      attribute = entry.to_s.delete("@")
-      attribute.is_a(String)? attr_type = "text" : attr_type = "number"
-      if attribute != "id" %>
-        <%= attribute.capitalize %>:<input type=<%= attr_type %> name=<%= attribute %>>  
-      <%end
-    end %>
-  </form>
+<form action="/new/<%= @type %>" method="post">
+<%  variables.each do |attribute|
+attr_type = {"category_id"=>:int,"location_id"=>:int,"name"=>:str,"description"=>:str,"cost"=>:int,"capacity"=>:int}[attribute]
+attr_type = "text" if attr_type == :str
+attr_type = "number" if attr_type == :int%>
+        <%= attribute.capitalize %>:<input type=<%= attr_type %> name=<%= attribute %>><br> 
+<% end %>
+  <input type=submit name=ignore value="Create New">
+  <input type=text name=type value=<%= @type.capitalize %> readonly>
+</form>
     
     
     

@@ -1,0 +1,9 @@
+<%   @objects = Object.const_get(@type).send("seek","id",@id)  %>
+<h2>ARE YOU SURE YOU WANT TO DELETE THIS <%= @type.upcase %>?</h2>
+<pre>
+  <% @objects.each do |object|
+   category_name = WAREHOUSE.execute("SELECT name FROM categories WHERE id = #{object.category_id}")[0]["name"]
+   location_name = WAREHOUSE.execute("SELECT name FROM locations WHERE id = #{object.location_id}")[0]["name"]
+   entry = (object.id.to_s.ljust(5) + category_name.ljust(15) + location_name) %> <%= entry %>
+  <% end %>
+</pre>
