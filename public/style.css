@@ -1,0 +1,30 @@
+body{
+  background-color: #DA82DA;
+  margin-left: 25%;
+  margin-right: 25%;
+  font-family: sans-serif;
+}
+
+pre{
+  background-color: #EBA4EB;
+  color: #7F217F;
+}
+
+h1{
+  color: #7F217F;
+  text-align: center;
+}
+
+h2{
+  color: #7F217F;
+  text-align: center;
+}
+
+p{
+  text-align: center;
+}
+
+input{
+  background-color: #EBA4EB;
+  border: 4px groove, #7F217F;
+}

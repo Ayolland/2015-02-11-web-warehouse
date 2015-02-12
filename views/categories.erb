@@ -1,7 +1,8 @@
-<%   @objects = Category.seek_all  %>
+<%#   @objects = Category.seek_all  %>
 <h2> VIEWING ALL CATEGORIES </h2>
 <%= erb 'bits/nav'.to_sym %>
 <pre>
+  
   <% index = "id".ljust(5)+"name".ljust(15)+"cost".ljust(6)+"description" %><%= index %>
   
   <% @objects.each do |object|
@@ -9,16 +10,4 @@
   <% end %>
   
 </pre>
-
-<form action="/add" method="post">
-  <input type=submit name=add value="Add New">
-  <input type=text name=type value=<%= @objects[0].class %> readonly>
-</form><br>
-<form action="/edit" method="post">
-  Enter ID to<input type=number name=edit_id><input type=submit name=edit value="Edit">
-  <input type=text name=type value=<%= @objects[0].class %> readonly>
-</form><br>
-<form action="/del" method="post">
-  Enter ID to<input type=number name=del_id><input type=submit name=edit value="Delete">
-  <input type=text name=type value=<%= @objects[0].class %> readonly>
-</form><br>
+<%= erb "bits/supermenu".to_sym %>

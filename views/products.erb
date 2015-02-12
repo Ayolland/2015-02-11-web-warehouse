@@ -1,7 +1,7 @@
-<%   @objects = Product.seek_all  %>
+<%#   @objects = Product.seek_all  %>
 <h2> VIEWING ALL PRODUCTS </h2>
 <%= erb 'bits/nav'.to_sym %>
-<pre>
+<pre> 
   <% index = "id".ljust(5)+"category".ljust(15)+"location" %><%= index %>
   
   <% @objects.each do |object|
@@ -10,19 +10,4 @@
    entry = (object.id.to_s.ljust(5) + category_name.ljust(15) + location_name) %> <%= entry %>
   <% end %>  
 </pre>
-
-<form action="/add" method="post">
-  <input type=submit name=add value="Add New">
-  <input type=text name=type value=<%= @objects[0].class %> readonly>
-</form><br>
-<form action="/edit" method="post">
-  Enter ID to<input type=number name=edit_id><input type=submit name=edit value="Edit">
-  <input type=text name=type value=<%= @objects[0].class %> readonly>
-</form><br>
-<form action="/del" method="post">
-  Enter ID to<input type=number name=del_id><input type=submit name=edit value="Delete">
-  <input type=text name=type value=<%= @objects[0].class %> readonly>
-</form><br>
-  <a href=>Search in Products</a>
-</form>
-<% params[:type] = "Product" %>
+<%= erb "bits/supermenu".to_sym %>

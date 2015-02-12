@@ -26,23 +26,6 @@ value = object.send(attribute)%>
   <input type=text name=id value=<%= @objects[0].id %> readonly>
 </form>
 
-<% if @type == "Product"  %>
-  <%   @objects = Category.seek_all  %>
-  <h4> CATEGORY TYPES:</h4>
-  <pre>
-    <% index = "id".ljust(5)+"name".ljust(15)+"cost".ljust(6)+"description" %><%= index %>
-    
-    <% @objects.each do |object|
-     entry = (object.id.to_s.ljust(5) + object.name.ljust(15) + object.cost.to_s.ljust(6) + object.description) %> <%= entry %>
-    <% end %>
-  </pre>
-  <%  @objects = Location.seek_all %>
-  <h4> LOCATION TYPES: </h4>
-  <pre>
-    <% index = "id".ljust(5)+"name".ljust(15)+"capacity" %><%= index %>
-  
-    <% @objects.each do |object|
-     entry = ( object.id.to_s.ljust(5) + object.name.ljust(15) + object.capacity.to_s) %> <%= entry %>
-    <% end %>
-  </pre>
-<% end %>
+<% if @type == "Product"
+erb "bits/foereign_keys".to_sym
+end %>

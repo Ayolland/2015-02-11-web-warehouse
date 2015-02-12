@@ -15,14 +15,17 @@ get "/" do
 end
 
 get "/products" do
+  @objects = Product.seek_all
   erb :products
 end
 
 get "/categories" do
+  @objects = Category.seek_all
   erb :categories
 end
 
 get "/locations" do
+  @objects = Location.seek_all
   erb :locations
 end
 
@@ -37,21 +40,12 @@ post "/del" do
   erb :del
 end
 
-
-
 get "/del" do
   object_name = params[:type].capitalize
   a = Object.const_get(object_name).send("new",params)
   a.id = "XX" + a.id.to_s + "XX"
-  binding.pry
   a.cram
-  if params[:type] == "Product"
-    erb :products
-  elsif params[:type] == "Category"
-    erb :categories
-  else params[:type] == "Location"
-    erb :locations
-  end
+  swoosh
 end
 
 post "/edit" do
@@ -66,11 +60,21 @@ post "/new/:type" do
   a.id = params[:id].to_i if a.id.to_i != 0
   binding.pry
   a.cram
-  if params[:type] == "Product"
-    erb :products
-  elsif params[:type] == "Category"
-    erb :categories
-  else params[:type] == "Location"
-    erb :locations
+  swoosh
+end
+
+helpers do
+  def swoosh
+    if params[:type] == "Product"
+      @objects = Product.seek_all
+      erb :products
+    elsif params[:type] == "Category"
+      @objects = Category.seek_all
+      erb :categories
+    else params[:type] == "Location"
+      @objects = Location.seek_all
+      erb :locations
+    end
   end
+  
 end
