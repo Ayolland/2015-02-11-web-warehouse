@@ -63,6 +63,7 @@ get "/new/:type" do
   object_name = params[:type].capitalize
   a = Object.const_get(object_name).send("new",params)
   a.id = params[:id].to_i if a.id.to_i != 0
+  valid_loc_cat(a)
   a.cram
   swoosh
 end
@@ -84,6 +85,15 @@ helpers do
     else params[:type] == "Location"
       @objects = Location.seek_all
       erb :locations
+    end
+  end
+  
+  def valid_loc_cat(object)
+    match_loc = WAREHOUSE.execute("SELECT * FROM locations WHERE id =#{object.location_id}")
+    match_cat = WAREHOUSE.execute("SELECT * FROM categories WHERE id =#{object.category_id}")
+    binding.pry
+    if (object.location_id != nil || object.category_id != nil)&&(match_loc != [] || match_cat != [])
+      erb :invalid
     end
   end
   

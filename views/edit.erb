@@ -13,13 +13,13 @@
 <form action="/new/<%= @type %>" method="get">
 <%  @variables.each do |attribute|
 value = @object.send(attribute)%>
-        <%= attribute.capitalize %>:<input type=<%= str_v_int(attribute) %> name=<%= attribute %> value=<%= value %>><br> 
+        New <%= attribute.capitalize %>:<input type=<%= str_v_int(attribute) %> name=<%= attribute %> value=<%= value %>><br> 
 <% end %>
   <input type=submit name=ignore value="Edit this <%= @type %>">
   <input type=hidden name=type value=<%= @type %> readonly>
   <input type=hidden name=id value=<%= @object.id %> readonly>
 </form>
 
-<% if @type == "Product"
-erb "bits/foreign_keys".to_sym
-end %>
+<% if @type == "Product"%>
+<%= erb "bits/foreign_keys".to_sym %>
+<% end %>
