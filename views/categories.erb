@@ -1,6 +1,6 @@
 <%   @objects = Category.seek_all  %>
 <h2> VIEWING ALL CATEGORIES </h2>
-  
+<%= erb 'bits/nav'.to_sym %>
 <pre>
   <% index = "id".ljust(5)+"name".ljust(15)+"cost".ljust(6)+"description" %><%= index %>
   

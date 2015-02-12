@@ -6,24 +6,13 @@ require_relative "class_modules.rb"
 require_relative "product.rb"
 require_relative "category.rb"
 require_relative "location.rb"
-require_relative "boot.rb"
 
-WAREHOUSE = SQLite3::Database.new('warehouse.db')
+WAREHOUSE = SQLite3::Database.new('database/warehouse.db')
+require_relative "database/database_setup.rb"
 
-  WAREHOUSE.results_as_hash = true
-  WAREHOUSE.execute("CREATE TABLE IF NOT EXISTS products
-                   (id INTEGER PRIMARY KEY,
-                    category_id INTEGER,
-                    location_id INTEGER)")
-  WAREHOUSE.execute("CREATE TABLE IF NOT EXISTS categories
-                   (id INTEGER PRIMARY KEY,
-                    name TEXT,
-                    description TEXT,
-                    cost INTEGER)")
-  WAREHOUSE.execute("CREATE TABLE IF NOT EXISTS locations
-                   (id INTEGER PRIMARY KEY,
-                    name TEXT,
-                    capacity INTEGER)")
+get "/" do
+  erb :home
+end
 
 get "/products" do
   erb :products
@@ -47,6 +36,8 @@ post "/del" do
   @id   = params[:del_id]
   erb :del
 end
+
+
 
 get "/del" do
   object_name = params[:type].capitalize
