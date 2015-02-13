@@ -1,7 +1,7 @@
 body{
   background-color: #DA82DA;
-  margin-left: 25%;
-  margin-right: 25%;
+  width: 500px;
+  margin: auto;
   font-family: sans-serif;
 }
 
@@ -28,6 +28,7 @@ h4{
 
 p{
   text-align: center;
+  font-size: 12px;
 }
 
 input{

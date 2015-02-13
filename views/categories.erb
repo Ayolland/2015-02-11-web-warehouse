@@ -1,7 +1,0 @@
-<h2> VIEWING ALL CATEGORIES </h2>
-<%= erb 'bits/nav'.to_sym %>
-<pre> <%= index %>
-  <% @objects.each do |object| %>
-  <%= entry(object) %><% end %>  
-</pre>
-<%= erb "bits/supermenu".to_sym %>

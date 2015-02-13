@@ -7,7 +7,7 @@
 <form action="/new/<%= @type %>" method="get">
 <%  @variables.each do |attribute|
 value = @object.send(attribute)%>
-        New <%= attribute.capitalize %>:<input type=<%= str_v_int(attribute) %> name=<%= attribute %> value=<%= value %>><br><br> 
+        New <%= attribute.capitalize %>:<input type=<%= str_v_int(attribute) %> name=<%= attribute %> value=<%= value %>><br> 
 <% end %>
   <input type=submit name=ignore value="Edit this <%= @type %>">
   <input type=hidden name=type value=<%= @type %> readonly>
