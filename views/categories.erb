@@ -1,12 +1,7 @@
 <h2> VIEWING ALL CATEGORIES </h2>
 <%= erb 'bits/nav'.to_sym %>
-<pre>
-  
-  <% index = "id".ljust(5)+"name".ljust(15)+"cost".ljust(6)+"description" %><%= index %>
-  
-  <% @objects.each do |object|
-   entry = (object.id.to_s.ljust(5) + object.name.ljust(15) + object.cost.to_s.ljust(6) + object.description) %> <%= entry %>
-  <% end %>
-  
+<pre> <%= index %>
+  <% @objects.each do |object| %>
+  <%= entry(object) %><% end %>  
 </pre>
 <%= erb "bits/supermenu".to_sym %>

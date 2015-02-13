@@ -1,12 +1,8 @@
-<%#   @objects = Product.seek_all  %>
+<% binding.pry  %>
 <h2> VIEWING ALL PRODUCTS </h2>
 <%= erb 'bits/nav'.to_sym %>
-<pre> 
-  <% index = "id".ljust(5)+"category".ljust(15)+"location" %><%= index %>
-  
-  <% @objects.each do |object|
-  location_name, category_name = loc_cat_id(object)
-   entry = (object.id.to_s.ljust(5) + category_name.ljust(15) + location_name) %> <%= entry %>
-  <% end %>  
+<pre> <%= index %>
+  <% @objects.each do |object| %>
+  <%= entry(object) %><% end %>  
 </pre>
 <%= erb "bits/supermenu".to_sym %>

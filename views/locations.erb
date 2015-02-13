@@ -1,13 +1,8 @@
-<%#  @objects = Location.seek_all %>
+<% binding.pry  %>
 <h2> VIEWING ALL LOCATIONS </h2>
 <%= erb 'bits/nav'.to_sym %>
-<pre>
-  
-  <% index = "id".ljust(5)+"name".ljust(15)+"capacity" %><%= index %>
-  
-  <% @objects.each do |object|
-   entry = ( object.id.to_s.ljust(5) + object.name.ljust(15) + object.capacity.to_s) %> <%= entry %>
-  <% end %>
-  
+<pre> <%= index %>
+  <% @objects.each do |object| %>
+  <%= entry(object) %><% end %>  
 </pre>
 <%= erb "bits/supermenu".to_sym %>
