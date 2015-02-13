@@ -1,0 +1,15 @@
+<h2>SEARCHING IN <%= plural(@type).upcase %>: <%= @id %></h2>
+<%= erb 'bits/nav'.to_sym %>
+<%  @variables.each do |attribute|
+value = @object.send(attribute)%>
+<form action="/results" method="get">
+<%= attribute.capitalize %>:<input type=<%= str_v_int(attribute) %> name=<%= attribute %>>
+  <input type=submit name=ignore value="Search by <%= attribute %>">
+  <input type=hidden name=type value=<%= @type %> readonly>
+  <input type=hidden name=column value=<%= attribute %> readonly>
+  </form><br>
+<% end %>
+
+<% if @type == "Product"%>
+<%= erb "bits/foreign_keys".to_sym %>
+<% end %>

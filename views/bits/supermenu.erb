@@ -1,15 +1,15 @@
 <form action="/add" method="get">
   <input type=submit name=add value="Add New <%= @objects[0].class %>">
   <input type=hidden name=type value=<%= @objects[0].class %> readonly>
-</form>
+</form><br>
 <form action="/search" method="get">
   <input type=submit name=add value="Search for specific <%= @objects[0].class %>">
   <input type=hidden name=type value=<%= @objects[0].class %> readonly>
-</form>
+</form><br>
 <form action="/edit" method="get">
   Enter ID to<input type=number name=edit_id><input type=submit name=edit value="Edit <%= @objects[0].class %>">
   <input type=hidden name=type value=<%= @objects[0].class %> readonly>
-</form>
+</form><br>
 <form action="/del" method="get">
   Enter ID to<input type=number name=del_id><input type=submit name=edit value="Delete <%= @objects[0].class %>">
   <input type=hidden name=type value=<%= @objects[0].class %> readonly>

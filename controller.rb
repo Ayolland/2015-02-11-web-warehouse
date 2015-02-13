@@ -41,7 +41,10 @@ end
 get "/del" do
   @type = params[:type]
   @id   = params[:del_id]
-  erb :del
+  if @objects != []
+    erb :del 
+  else erb :invalid
+  end
 end
 
 get "/mark" do
@@ -55,34 +58,67 @@ get "/edit" do
   @type = params[:type]
   @id   = params[:edit_id]
   @variables = editable(@type)
-  @objects = Object.const_get(@type).send("seek","id",@id)  
+  @objects = Object.const_get(@type).send("seek","id",@id) 
+  # binding.pry 
   @object = @objects[0]
-  erb :edit
+  if @objects != []
+    erb :edit 
+  else erb :invalid
+  end
 end
 
 get "/new/:type" do
   object_name = params[:type].capitalize
   a = Object.const_get(object_name).send("new",params)
   a.id = params[:id].to_i if a.id.to_i != 0
-  swoosh(a)
+  swoosh(a) 
 end
 
 get "/search" do
-  
+  @type = params[:type]
+  @objects = Object.const_get(@type).send("seek_all")
+  @object = @objects[0]
+  @variables = stripper(@object.instance_variables)
+  # binding.pry
+  erb :search
+end
+
+get "/results" do
+  column = params[:column]
+  @type = params[:type]
+  # binding.pry
+  @objects = Object.const_get(@type).send("seek",column,params[column.to_sym])
+  # binding.pry
+  erb :results
 end
 
 helpers do
   
+  def stripper(array)
+    new_array = []
+    array.each do |symbol|
+      new_array << symbol.to_s.delete("@")
+    end
+    new_array
+  end
+  
   def swoosh(object)
-    object.cram if valid_loc_cat(object)
+    if object.class == Product 
+      object.cram if valid_loc_cat(object)
+    else
+      object.cram
+    end 
     if params[:type] == "Product" && valid_loc_cat(object)
       @objects = Product.seek_all
+      @type = "Product"
       erb :products
     elsif params[:type] == "Category"
       @objects = Category.seek_all
+      @type = "Category"
       erb :categories
     elsif params[:type] == "Location"
       @objects = Location.seek_all
+      @type = "Location"
       erb :locations
     else
       erb :invalid
@@ -92,7 +128,7 @@ helpers do
   def valid_loc_cat(object)
     match_loc = WAREHOUSE.execute("SELECT * FROM locations WHERE id =#{object.location_id}")
     match_cat = WAREHOUSE.execute("SELECT * FROM categories WHERE id =#{object.category_id}")
-    (object.location_id == nil || object.category_id == nil)&&(match_loc == [] || match_cat == [])
+    (match_loc != [] && match_cat != [])
   end
   
   def loc_cat_id(object)
@@ -125,7 +161,7 @@ helpers do
   end
   
   def str_v_int(attribute)
-    attr_type = {"category_id"=>:int,"location_id"=>:int,"name"=>:str,"description"=>:str,"cost"=>:int,"capacity"=>:int}[attribute]
+    attr_type = {"category_id"=>:int,"location_id"=>:int,"name"=>:str,"description"=>:str,"cost"=>:int,"capacity"=>:int,"id"=>:int}[attribute]
     attr_type = "text" if attr_type == :str
     attr_type = "number" if attr_type == :int
     attr_type

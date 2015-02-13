@@ -1,4 +1,5 @@
 <h2>INPUT NEW <%= @type.upcase %>:</h2>
+<%= erb 'bits/nav'.to_sym %>
 <form action="/new/<%= @type %>" method="get">
 <%  @variables.each do |attribute| %>
         <%= attribute.capitalize %>:<input type=<%= str_v_int(attribute) %> name=<%= attribute %>><br> 
@@ -6,9 +7,9 @@
   <input type=submit name=ignore value="Create New <%= @type %>">
   <input type=hidden name=type value=<%= @type %> readonly>
 </form>
-<% if @type == "Product"
-erb "bits/foreign_keys".to_sym
-end %>
+<% if @type == "Product"%>
+<%= erb "bits/foreign_keys".to_sym %>
+<%end %>
     
     
     

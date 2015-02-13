@@ -21,6 +21,11 @@ h2{
   text-align: center;
 }
 
+h4{
+  color: #7F217F;
+  text-align: center;
+}
+
 p{
   text-align: center;
 }
@@ -28,4 +33,10 @@ p{
 input{
   background-color: #EBA4EB;
   border: 4px groove, #7F217F;
+}
+
+form{
+  background-color: #C95DC9;
+  text-align: justify;
+  padding: 6px;
 }

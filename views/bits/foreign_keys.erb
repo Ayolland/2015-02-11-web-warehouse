@@ -1,18 +1,14 @@
-<%  @objects = Category.seek_all %>
+<%  @objects = Category.seek_all 
+@type = "Category"%>
 <h4> CATEGORY TYPES:</h4>
-<pre>
-  <% index = "id".ljust(5)+"name".ljust(15)+"cost".ljust(6)+"description" %><%= index %>
-  
-  <% @objects.each do |object|
-   entry = (object.id.to_s.ljust(5) + object.name.ljust(15) + object.cost.to_s.ljust(6) + object.description) %> <%= entry %>
-  <% end %>
+<pre> <%= index %>
+  <% @objects.each do |object| %>
+  <%= entry(object) %><% end %>  
 </pre>
-<%  @objects = Location.seek_all %>
+<%  @objects = Location.seek_all 
+@type = "Location"%>
 <h4> LOCATION TYPES: </h4>
-<pre>
-  <% index = "id".ljust(5)+"name".ljust(15)+"capacity" %><%= index %>
-
-  <% @objects.each do |object|
-   entry = ( object.id.to_s.ljust(5) + object.name.ljust(15) + object.capacity.to_s) %> <%= entry %>
-  <% end %>
+<pre> <%= index %>
+  <% @objects.each do |object| %>
+  <%= entry(object) %><% end %>  
 </pre>
