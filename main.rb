@@ -43,6 +43,7 @@ get "/del" do
   @type = params[:type]
   @id   = params[:del_id]
   @objects = Object.const_get(@type).send("seek","id",@id)
+  @object = @objects[0]
   if @objects != []
     erb :del 
   else erb :invalid

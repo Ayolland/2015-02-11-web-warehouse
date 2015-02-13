@@ -1,19 +1,11 @@
-<%   @objects = Object.const_get(@type).send("seek","id",@id)  
-object =@objects[0]%>
 <h2>ARE YOU SURE YOU WANT TO DELETE THIS <%= @type.upcase %>?</h2>
 <pre>
-  <% index = "id".ljust(5)+"category".ljust(15)+"location" if @type == "Product"
-     index = "id".ljust(5)+"name".ljust(15)+"cost".ljust(6)+"description" if @type == "Category"
-     index = "id".ljust(5)+"name".ljust(15)+"capacity" if @type == "Location"%><%= index %>
-  <% category_name = WAREHOUSE.execute("SELECT name FROM categories WHERE id = #{object.category_id}")[0]["name"] if @type == "Product"
-   location_name = WAREHOUSE.execute("SELECT name FROM locations WHERE id = #{object.location_id}")[0]["name"] if @type == "Product"
-   entry = (object.id.to_s.ljust(5) + category_name.ljust(15) + location_name) if @type == "Product"
-   entry = (object.id.to_s.ljust(5) + object.name.ljust(15) + object.cost.to_s.ljust(6) + object.description) if @type == "Category"
-   entry = (puts object.id.to_s.ljust(5) + object.name.ljust(15) + object.capacity.to_s) if @type == "Location"%><%= entry %>
+  <%= index %>
+  <%= entry(@object) %>
 </pre>
 <% route = plural(@type)%>
 <form action="/mark" method="get">
-  <input type=submit name=ignore value="Delete this <%= @objects[0].class %>"> this
+  <input type=submit name=ignore value="Delete this <%= @objects[0].class %>">
   <input type=hidden name=type value=<%= @objects[0].class %> readonly>:
   <input type=hidden name=id value=<%= @objects[0].id %> readonly>
 </form>
